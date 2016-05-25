@@ -1,0 +1,32 @@
+{
+  "name": "tpa-spending-categories",
+  "version": "1.0.0",
+  "authors": [
+    "Anonymous <anonymous@example.com>"
+  ],
+  "description": "An element providing a solution to no problem in particular.",
+  "keywords": [
+    "web-component",
+    "polymer",
+    "seed"
+  ],
+  "main": "tpa-spending-categories.html",
+  "license": "http://polymer.github.io/LICENSE.txt",
+  "homepage": "https://github.com/ING-Group/tpa-component/",
+  "ignore": [
+    "/.*",
+    "/test/"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.4.0",
+    "tpa-icons": "ING-Group/tpa-icons",
+    "tpa-styles": "ING-Group/tpa-styles",
+    "tpa-i18n": "ING-group/tpa-i18n",
+    "iron-signals": "PolymerElements/iron-signals#^1.0.3",
+    "chart-elements": "^2.0.2"
+  },
+  "devDependencies": {
+    "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
+    "web-component-tester": "^4.0.0"
+  }
+}

@@ -9,39 +9,54 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
 
-    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
-    <script src="../../web-component-tester/browser.js"></script>
+  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+  <script src="../../web-component-tester/browser.js"></script>
 
-    <!-- Step 1: import the element to test -->
-    <link rel="import" href="../tpa-spending-categories.html">
-    <link rel="import" href="../../tpa-icons/tpa-icons.html">
-  </head>
-  <body>
+  <!-- Step 1: import the element to test -->
+  <link rel="import" href="../tpa-spending-categories.html">
+  <link rel="import" href="../../tpa-icons/tpa-icons.html">
+</head>
+<body>
 
-    <!-- You can use the document as a place to set up your fixtures. -->
-    <test-fixture id="tpa-spending-categories-fixture">
-      <template>
-        <tpa-spending-categories labels='["label1","label2"]' parts='[50, 50]'>
-        </tpa-spending-categories>
-      </template>
-    </test-fixture>
+<!-- You can use the document as a place to set up your fixtures. -->
+<test-fixture id="tpa-spending-categories-fixture">
+  <template>
+    <tpa-spending-categories parts='{"labels": ["label1","label2"], "data": [40, 60]}'>
+    </tpa-spending-categories>
+  </template>
+</test-fixture>
 
-    <script>
-      suite('<tpa-spending-categories>', function() {
+<script>
+  suite('<tpa-spending-categories>', function () {
 
-        var myEl;
+    var myEl;
+    var _data = {
+      "labels": ["label1", "label2"],
+      "datasets": [{"data": [40, 60], "backgroundColor": ["#ff6200", "#d0d93c", "#f8fae2", "#a3e98a", "#f4ff81"]}]
+    };
 
-        setup(function() {
-          myEl = fixture('tpa-spending-categories-fixture');
-        });
+    setup(function () {
+      myEl = fixture('tpa-spending-categories-fixture');
+    });
 
+    test('should be defined', function () {
+      expect(myEl).to.not.be.undefined;
+    });
 
-      });
-    </script>
+    test('should provide the correctly formatted data object', function () {
+      expect(myEl._data).to.eql(_data);
+    })
 
-  </body>
+    test('should provide the correct options', function () {
+      expect(myEl._options.responsive).to.be.true;
+      expect(myEl._options.legend.display).to.be.false;
+    })
+  });
+</script>
+
+</body>
 </html>

@@ -1,26 +1,30 @@
 FORMAT: 1A
 
-# Polls
+# Spending categories
 
-Polls is a simple API allowing consumers to view polls and vote in them.
+Display the categories and the amount spent in them
 
 [API Blueprint Example](https://help.apiary.io/api_101/api_blueprint_tutorial/)
 
-## Questions Collection [/api/questions]
+## Spending categories Collection [/api/spending-categories]
 
-### List All Questions [GET]
+### List categories and the amount spent in them [GET]
 
 + Response 200 (application/json)
 
         {
-            "question": "Favourite programming language?",
-            "choices": [
-                {
-                    "choice": "Swift",
-                    "votes": 2048
-                }, {
-                    "choice": "Python",
-                    "votes": 1024
-                }
+            "labels": [
+                "Hypotheek",
+                "Energie",
+                "Verzekeringen",
+                "Vervoer",
+                "Ovirge"
+            ]
+            "data": [
+                40, 
+                15, 
+                15, 
+                15, 
+                15
             ]
         }

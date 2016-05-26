@@ -17,7 +17,7 @@ An element providing a pie chart
 
 Example:
 
-    <tpa-spending-categories labels='["label1","label2"]' parts='[50, 50]'>
+    <tpa-spending-categories parts='{"labels": ["label1","label2"], "data": [40, 60]}'>
     </tpa-spending-categories>
 
 @demo demo/index.html
@@ -49,22 +49,17 @@ Example:
       properties: {
 
         /**
-         * Labels that will be displayed on the chart
-         */
-        labels: {
-          type: Array,
-          value: function () {
-            return [];
-          }
-        },
-
-        /**
-         * Sizes of the parts of the chart
+         * Parts of the chart
+         *
+         * @type {labels: Array, data: Array}}
          */
         parts: {
-          type: Array,
+          type: Object,
           value: function () {
-            return [];
+            return {
+              "labels": [],
+              "data": []
+            };
           }
         },
 
@@ -105,10 +100,10 @@ Example:
       },
       attached: function () {
         this._data = {
-          labels: this.labels,
+          labels: this.parts.labels,
           datasets: [
             {
-              data: this.parts,
+              data: this.parts.data,
               backgroundColor: [
                 "#f5f5f5",
                 "#ebebeb",

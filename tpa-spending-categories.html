@@ -11,8 +11,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../chart-elements/chart-elements.html">
 
+
 <!--
-An element providing a solution to no problem in particular.
+An element providing a pie chart
 
 Example:
 
@@ -21,7 +22,6 @@ Example:
 Example:
 
     <tpa-spending-categories>
-      <h2>Hello tpa-spending-categories</h2>
     </tpa-spending-categories>
 
 @demo demo/index.html
@@ -31,7 +31,11 @@ Example:
 <dom-module id="tpa-spending-categories">
   <template>
     <style>
-      .legend li span{
+      :host::shadow li {
+        list-style: none;
+      }
+
+      :host::shadow.chart-legend-item {
         display: inline-block;
         width: 12px;
         height: 12px;
@@ -40,7 +44,7 @@ Example:
     </style>
 
     <h1>Spending categories</h1>
-    <chart-pie id="chart" data="[[data]]" options="[[options]]"></chart-pie>
+    <chart-pie id="pieChart" data="{{data}}" options="{{options}}" chart="{{chart}}"></chart-pie>
     <div id="legend" class="chart-legend"></div>
   </template>
 
@@ -50,43 +54,71 @@ Example:
       properties: {
         data: {
           type: Object,
-          value: function() {
+          value: function () {
             return {};
           }
+        },
+        options: {
+          type: Object,
+          value: function () {
+            return {};
+          }
+        },
+        chart: {
+          notify: true,
+          observer: '_chartChanged'
         }
       },
-      attached: function() {
-        this.options = {
-          animateRotate : false
+      _chartChanged: function (newVal, oldVal) {
+        document.querySelector("#legend").innerHTML = newVal.generateLegend();
+        Polymer.updateStyles();
+      },
+      attached: function () {
+        this.data = {
+          labels: [
+            "Hypotheek",
+            "Energie",
+            "Verzekeringen",
+            "Vervoer",
+            "Ovirge"
+          ],
+          datasets: [
+            {
+              data: [40, 15, 15, 15, 15],
+              backgroundColor: [
+                "#f5f5f5",
+                "#ebebeb",
+                "#d5d5d5",
+                "#adadad",
+                "#333333"
+              ]
+            }]
         };
 
-        this.data = [
-          {
-            value: 61,
-            color: "#09355C",
-            label: "Label 1"
-          }, {
-            value: 11,
-            color: "#CBCBCB",
-            label: "Label 2"
-       }, {
-value: 28,
-color: "#B61B12",
-label: "Label 3"
-}];
+        this.options = {
+          responsive: true,
+          legendCallback: function(chart) {
+            var text = [];
+            text.push('<ul class="' + chart.id + '-legend">');
 
-this.options = {
-segmentShowStroke: false,
-animateRotate: false,
-animateScale: false,
-tooltipTemplate: "<%= value %>%"
-};
+            if (chart.data.datasets.length) {
+              for (var i = 0; i < chart.data.datasets[0].data.length; ++i) {
+                text.push('<li><span class="chart-legend-item" style="background-color:' + chart.data.datasets[0].backgroundColor[i] + '"></span>');
+                if (chart.data.labels[i]) {
+                  text.push(chart.data.labels[i]);
+                }
+                text.push('</li>');
+              }
+            }
 
-this.$.legend.innerHTML =
-new Chart(this.$.chart.ctx)
-.Pie(this.$.chart.data, this.$.chart.option)
-.generateLegend();
-}
-});
-</script>
+            text.push('</ul>');
+            return text.join("");
+          },
+          legend: {
+            display: false
+          }
+        };
+      }
+    });
+  </script>
 </dom-module>

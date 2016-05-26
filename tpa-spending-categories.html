@@ -76,16 +76,10 @@ Example:
       },
       attached: function () {
         this.data = {
-          labels: [
-            "Hypotheek",
-            "Energie",
-            "Verzekeringen",
-            "Vervoer",
-            "Ovirge"
-          ],
+          labels: this.labels,
           datasets: [
             {
-              data: [40, 15, 15, 15, 15],
+              data: this.parts,
               backgroundColor: [
                 "#f5f5f5",
                 "#ebebeb",

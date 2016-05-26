@@ -25,8 +25,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <!-- You can use the document as a place to set up your fixtures. -->
     <test-fixture id="tpa-spending-categories-fixture">
       <template>
-        <tpa-spending-categories>
-          <h2>tpa-spending-categories</h2>
+        <tpa-spending-categories labels='["label1","label2"]' parts='[50, 50]'>
         </tpa-spending-categories>
       </template>
     </test-fixture>
@@ -40,31 +39,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           myEl = fixture('tpa-spending-categories-fixture');
         });
 
-        test('defines the "author" property', function() {
-          assert.equal(myEl.author.name, 'Dimitri Glazkov');
-          assert.equal(myEl.author.image, 'http://addyosmani.com/blog/wp-content/uploads/2013/04/unicorn.jpg');
-        });
-
-        test('says hello', function() {
-          assert.equal(myEl.sayHello(), 'tpa-spending-categories says, Hello World!');
-
-          var greetings = myEl.sayHello('greetings Earthlings');
-          assert.equal(greetings, 'tpa-spending-categories says, greetings Earthlings');
-        });
-
-        test('fires lasers', function(done) {
-          myEl.addEventListener('tpa-spending-categories-lasers', function(event) {
-            assert.equal(event.detail.sound, 'Pew pew!');
-            done();
-          });
-          myEl.fireLasers();
-        });
-
-        test('distributed children', function() {
-          var els = myEl.getContentChildren();
-          assert.equal(els.length, 1, 'one distributed node');
-          assert.equal(els[0], myEl.querySelector('h2'), 'content distributed correctly');
-        });
 
       });
     </script>

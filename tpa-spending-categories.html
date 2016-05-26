@@ -17,11 +17,7 @@ An element providing a pie chart
 
 Example:
 
-    <tpa-spending-categories></tpa-spending-categories>
-
-Example:
-
-    <tpa-spending-categories>
+    <tpa-spending-categories labels='["label1","label2"]' parts='[50, 50]'>
     </tpa-spending-categories>
 
 @demo demo/index.html
@@ -43,7 +39,7 @@ Example:
       }
     </style>
 
-    <chart-pie id="pieChart" data="{{data}}" options="{{options}}" chart="{{chart}}"></chart-pie>
+    <chart-pie id="pieChart" data="{{_data}}" options="{{_options}}" chart="{{_chart}}"></chart-pie>
     <div id="legend" class="chart-legend"></div>
   </template>
 
@@ -51,31 +47,64 @@ Example:
     Polymer({
       is: 'tpa-spending-categories',
       properties: {
+
+        /**
+         * Labels that will be displayed on the chart
+         */
         labels: {
           type: Array,
           value: function () {
             return [];
           }
         },
+
+        /**
+         * Sizes of the parts of the chart
+         */
         parts: {
           type: Array,
           value: function () {
             return [];
           }
         },
-        chart: {
+
+        /**
+         * The chart object used to render the chart
+         */
+        _chart: {
           notify: true,
           observer: '_chartChanged'
+        },
+
+        /**
+         * Data object used to render the chart
+         */
+        _data: {
+          type: Object,
+          value: function () {
+            return {};
+          }
+        },
+
+        /**
+         * Options object used to render the chart
+         */
+        _options: {
+          type: Object,
+          value: function () {
+            return {};
+          }
         }
       },
-      data: {},
-      options: {},
+      /**
+       * Function being called when the chart changes
+       * Used to render the legend
+       */
       _chartChanged: function (newVal, oldVal) {
         document.querySelector("#legend").innerHTML = newVal.generateLegend();
-        Polymer.updateStyles();
       },
       attached: function () {
-        this.data = {
+        this._data = {
           labels: this.labels,
           datasets: [
             {
@@ -90,7 +119,7 @@ Example:
             }]
         };
 
-        this.options = {
+        this._options = {
           responsive: true,
           legendCallback: function(chart) {
             var text = [];

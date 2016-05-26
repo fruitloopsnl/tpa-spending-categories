@@ -8,7 +8,7 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
 
-<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="../chart-elements/chart-elements.html">
 
 
@@ -25,6 +25,7 @@ Example:
 -->
 
 <dom-module id="tpa-spending-categories">
+  <style include="iron-flex"></style>
   <template>
     <style>
       :host::shadow li {
@@ -39,8 +40,11 @@ Example:
       }
     </style>
 
-    <chart-pie id="pieChart" data="{{_data}}" options="{{_options}}" chart="{{_chart}}"></chart-pie>
-    <div id="legend" class="chart-legend"></div>
+
+    <div class="layout horizontal">
+      <chart-pie id="pieChart" data="{{_data}}" options="{{_options}}" chart="{{_chart}}"></chart-pie>
+      <div id="legend" class="chart-legend"></div>
+    </div>
   </template>
 
   <script>

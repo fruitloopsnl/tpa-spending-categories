@@ -52,16 +52,16 @@ Example:
     Polymer({
       is: 'tpa-spending-categories',
       properties: {
-        data: {
-          type: Object,
+        labels: {
+          type: Array,
           value: function () {
-            return {};
+            return [];
           }
         },
-        options: {
-          type: Object,
+        parts: {
+          type: Array,
           value: function () {
-            return {};
+            return [];
           }
         },
         chart: {
@@ -69,6 +69,8 @@ Example:
           observer: '_chartChanged'
         }
       },
+      data: {},
+      options: {},
       _chartChanged: function (newVal, oldVal) {
         document.querySelector("#legend").innerHTML = newVal.generateLegend();
         Polymer.updateStyles();

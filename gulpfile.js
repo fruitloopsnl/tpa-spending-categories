@@ -7,11 +7,11 @@ var url = require('url');
 var args = require('yargs').argv;
 var opener = require('opener');
 
-var config = {    
+var config = {
     port  : args.port  || 5000,
     drakovProtocol : args.drakovUrl || 'http',
     drakovPort : args.drakovPort || 5001,
-    drakovHostname : args.drakovHostname || 'localhost' 
+    drakovHostname : args.drakovHostname || 'localhost'
 };
 
 function drakovProxy(){
@@ -20,47 +20,43 @@ function drakovProxy(){
         hostname: config.drakovHostname,
         port: config.drakovPort,
     };
-    
+
     var formattedUrl = url.format(drakovUrl);
     console.log('Drakov URL : ' + formattedUrl);
 
     var argv = {
-        sourceFiles: './**/*-mock.md', 
+        sourceFiles: './**/*-mock.md',
         serverPort: config.drakovPort
     };
     drakov.run(argv);
-    
+
     return proxy('/api', {
         target: formattedUrl,
         logLevel: 'debug'});
 }
 
-gulp.task('serve', function() {
-    var app = express();
-    app.use('/components', polyserve.makeApp());
-    app.use('/api', drakovProxy());
-
-    app.get('/*', (req, res) => {
-        var filePath = req.path;
-        send(req, filePath, { root: root, })
-            .on('error', (error) => {
-            if ((error).status == 404 && !filePath.endsWith('.html')) {
-                send(req, '/', { root: root }).pipe(res);
-            }
-            else {
-                res.statusCode = error.status || 500;
-                res.end(error.message);
-            }
-        })        
-        .pipe(res);
-    });
-
-    var polyserveUrl = 'http://localhost:'+ config.port +'/components/tpa-spending-categories/index.html';
-    console.log('\nPolyserving : '+ polyserveUrl +' \n');
-
-    app.listen(config.port);    
-    opener(polyserveUrl);
+gulp.task('serve', function () {
+  var app = express();
+  app.use('/components', polyserve.makeApp());
+  app.use('/api', drakovProxy());
+  app.get('/*', (req, res) => {
+    var filePath = req.path;
+  res.send(req, filePath)
+    .on('error', (error) => {
+    if ((error).status == 404 && !filePath.endsWith('.html')) {
+    res.send(req, '/').pipe(res);
+  }
+  else {
+    res.statusCode = error.status || 500;
+    res.end(error.message);
+  }
+})
+  .pipe(res);
 });
-
+  var polyserveUrl = 'http://localhost:' + config.port + '/components/tpa-spending-categories/index.html';
+  console.log('\nPolyserving : ' + polyserveUrl + ' \n');
+  app.listen(config.port);
+  opener(polyserveUrl);
+});
 
 gulp.task('default', ['serve']);

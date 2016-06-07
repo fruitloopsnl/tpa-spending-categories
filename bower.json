@@ -23,7 +23,7 @@
     "tpa-styles": "ING-Group/tpa-styles",
     "tpa-i18n": "ING-group/tpa-i18n",
     "iron-signals": "PolymerElements/iron-signals#^1.0.3",
-    "chart-elements": "https://github.com/robdodson/chart-elements.git#master"
+    "chart-elements": "robdodson/chart-elements#v3.0.0"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
